@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -41,7 +42,7 @@ class ProgramView : ComponentActivity(){
 
 @Composable
 fun Programs (name:String, modifier: Modifier = Modifier){
-    Card (modifier = Modifier.size(width = 240.dp, height = 100.dp),
+    Card (modifier = Modifier.size(width = 240.dp, height = 100.dp).padding(10.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp))
     {
