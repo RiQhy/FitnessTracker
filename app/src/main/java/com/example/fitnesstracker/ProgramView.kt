@@ -5,9 +5,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.fitnesstracker.Dataprovider.programs
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
 
@@ -32,7 +36,7 @@ class ProgramView : ComponentActivity(){
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Programs("Boo")
+                    List()
                 }
             }
         }
@@ -41,22 +45,32 @@ class ProgramView : ComponentActivity(){
 
 
 @Composable
-fun Programs (name:String, modifier: Modifier = Modifier){
-    Card (modifier = Modifier.size(width = 240.dp, height = 100.dp).padding(10.dp),
+fun ProgramsList (name:String, modifier: Modifier = Modifier){
+    Card (modifier = Modifier.size(width = 240.dp, height = 100.dp)
+        .padding(10.dp)
+        .clickable { TODO("ViewModel and api for clicking data") },
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp))
+            defaultElevation = 6.dp)
+            )
     {
         Text(
             text = name
         )
     }
 }
-
-@Preview(showBackground = true)
 @Composable
-fun ProgramPreview(){
-    FitnessTrackerTheme {
-        Programs("Fat")
+fun List () {
+    LazyColumn {
+        items(programs) { program ->
+            ProgramsList(name = program.name)
+        }
     }
-
 }
+
+    @Preview(showBackground = true)
+    @Composable
+    fun ProgramPreview() {
+        FitnessTrackerTheme {
+            List()
+        }
+    }
