@@ -49,7 +49,8 @@ fun LabeledTextField(label: String, textFieldValue: String, onValueChange: (Stri
 }
 @Composable
 fun DarkThemeSwitch(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
-    val backgroundColor = if (isChecked) Color.Black else Color(0xFFD9D9D9) // Determine background color based on isChecked
+    val backgroundColor = if (isChecked) Color.Black else Color(0xFFD9D9D9)
+    val textToggle = if (isChecked) "Light Mode" else "Dark Mode"
 
     Box(
         modifier = Modifier
@@ -65,7 +66,7 @@ fun DarkThemeSwitch(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Dark Theme: ",
+                text = textToggle,
                 modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Medium,
