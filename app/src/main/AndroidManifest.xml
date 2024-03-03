@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitnessTracker"
         tools:targetApi="31">
-        <activity android:name=".StatsView"
+        <activity android:name=".MainActivity"
             android:exported="true">
 
             <intent-filter>

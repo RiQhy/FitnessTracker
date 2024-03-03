@@ -95,7 +95,7 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 }
 
 @Composable
-fun StatsViewScreen(navController: NavController, currentSteps: Int, totalSteps: Int = 10000) {
+fun StatsViewScreen(currentSteps: Int, totalSteps: Int = 10000) {
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         // Convert currentSteps to progress between 0f and 1f
         val progress = currentSteps.toFloat() / totalSteps.toFloat()
@@ -119,13 +119,6 @@ fun StatsViewScreen(navController: NavController, currentSteps: Int, totalSteps:
                 color = Color.Black
             )
         }
-    }
-    Button(
-        onClick = { navController.popBackStack() },
-        modifier = Modifier
-            .padding(10.dp)
-    ) {
-        Text(text = "Back")
     }
 }
 

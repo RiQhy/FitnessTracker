@@ -120,13 +120,13 @@ fun SettingsScreen(navController: NavController) {
             LabeledTextField(label = "Man/Woman:", textFieldValue = genderFieldValue) { genderFieldValue = it }
         }
     }
-    Button(
+    /*Button(
         onClick = { navController.popBackStack() },
         modifier = Modifier
-            .padding(16.dp)
+            .padding(10.dp)
     ) {
         Text(text = "Back")
-    }
+    }*/
 }
 
 // Preview function for settings screen

@@ -49,7 +49,8 @@ class ProgramView : ComponentActivity(){
 
 @Composable
 fun ProgramsList (name:String, modifier: Modifier = Modifier){
-    Card (modifier = Modifier.size(width = 240.dp, height = 100.dp)
+    Card (modifier = Modifier
+        .size(width = 240.dp, height = 100.dp)
         .padding(10.dp)
         .clickable { TODO("ViewModel and api for clicking data") },
         elevation = CardDefaults.cardElevation(
@@ -68,13 +69,13 @@ fun List (navController: NavController) {
             ProgramsList(name = program.name)
         }
     }
-    Button(
-        onClick = { navController.popBackStack() },
+    /*Button(
+        onClick = {navController.popBackStack()},
         modifier = Modifier
             .padding(10.dp)
-    ) {
+    ){
         Text(text = "Back")
-    }
+    }*/
 }
 
 @Preview(showBackground = true)
