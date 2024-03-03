@@ -3,7 +3,6 @@ package com.example.fitnesstracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -99,7 +98,7 @@ fun Frontview(navController: NavController) {
                 .padding(bottom = 16.dp)
         ) {
             ProgramsButton {navController.navigate("exerciseProgramsView")}
-            StatsButton {navController.navigate("")}
+            StatsButton {navController.navigate("statsView")}
         }
     }
 }
