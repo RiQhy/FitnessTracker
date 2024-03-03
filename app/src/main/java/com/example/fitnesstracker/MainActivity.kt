@@ -45,7 +45,7 @@ fun Navigation() {
         composable("frontView") { Frontview(navController) }
         composable("settings") { SettingsScreen(navController)}
         composable("exerciseProgramsView") { List(navController) }
-        //composable("statsView") { StatsView(navController) }
+        composable("statsView") { StatsViewScreen(navController) }
     }
 }
 @Composable

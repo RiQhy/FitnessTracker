@@ -24,7 +24,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 class StatsView : AppCompatActivity(), SensorEventListener {
@@ -93,7 +95,7 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 }
 
 @Composable
-fun StatsViewScreen(currentSteps: Int, totalSteps: Int = 10000) {
+fun StatsViewScreen(navController: NavController, currentSteps: Int, totalSteps: Int = 10000) {
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         // Convert currentSteps to progress between 0f and 1f
         val progress = currentSteps.toFloat() / totalSteps.toFloat()
@@ -117,6 +119,13 @@ fun StatsViewScreen(currentSteps: Int, totalSteps: Int = 10000) {
                 color = Color.Black
             )
         }
+    }
+    Button(
+        onClick = { navController.popBackStack() },
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
+        Text(text = "Back")
     }
 }
 
