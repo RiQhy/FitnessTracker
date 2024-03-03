@@ -9,13 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,6 +45,7 @@ fun Navigation() {
     NavHost(navController = navController, startDestination = "frontView") {
         composable("frontView") { Frontview(navController) }
         composable("test") { test(navController)}
+        composable("settings") { SettingsScreen(navController)}
         composable("exerciseProgramsView") { List(navController) }
         //composable("statsView") { StatsView(navController) }
     }
@@ -95,14 +91,14 @@ fun Frontview(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.TopEnd)
         ) {
-            SettingsButton { navController.navigate("test")}
+            SettingsButton { navController.navigate("settings")}
         }
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp)
         ) {
-            ProgramsButton {navController.navigate("")}
+            ProgramsButton {navController.navigate("exerciseProgramsView")}
             StatsButton {navController.navigate("")}
         }
     }

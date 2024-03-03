@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.fitnesstracker.ui.theme.ColorConstants
 
 // Composable function for a labeled text field
@@ -94,7 +95,7 @@ fun DarkThemeSwitch(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
 
 // Composable function for settings screen
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(navController: NavController) {
     // State variables for settings
     var isChecked by remember { mutableStateOf(false) }
     var weightFieldValue by remember { mutableStateOf("") }
@@ -119,11 +120,14 @@ fun SettingsScreen() {
             LabeledTextField(label = "Man/Woman:", textFieldValue = genderFieldValue) { genderFieldValue = it }
         }
     }
+    Button(onClick = { navController.popBackStack() }) {
+        Text(text = "Back")
+    }
 }
 
 // Preview function for settings screen
 @Preview
 @Composable
 fun SettingsScreenPreview() {
-    SettingsScreen()
+
 }
