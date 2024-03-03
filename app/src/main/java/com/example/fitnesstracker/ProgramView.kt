@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -66,7 +68,11 @@ fun List (navController: NavController) {
             ProgramsList(name = program.name)
         }
     }
-    Button(onClick = { navController.popBackStack() }) {
+    Button(
+        onClick = { navController.popBackStack() },
+        modifier = Modifier
+            .padding(10.dp)
+    ) {
         Text(text = "Back")
     }
 }
@@ -75,6 +81,6 @@ fun List (navController: NavController) {
 @Composable
 fun ProgramPreview() {
     FitnessTrackerTheme {
-        //List(navController = )
+
     }
 }

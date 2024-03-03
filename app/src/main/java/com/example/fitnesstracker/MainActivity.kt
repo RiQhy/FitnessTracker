@@ -43,7 +43,6 @@ fun Navigation() {
 
     NavHost(navController = navController, startDestination = "frontView") {
         composable("frontView") { Frontview(navController) }
-        composable("test") { test(navController)}
         composable("settings") { SettingsScreen(navController)}
         composable("exerciseProgramsView") { List(navController) }
         //composable("statsView") { StatsView(navController) }
