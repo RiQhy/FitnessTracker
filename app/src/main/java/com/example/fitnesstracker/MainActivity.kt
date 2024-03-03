@@ -50,7 +50,7 @@ fun Navigation() {
     NavHost(navController = navController, startDestination = "frontView") {
         composable("frontView") { Frontview(navController) }
         composable("test") { test(navController)}
-        //composable("exerciseProgramsView") { ExerciseProgramsView(navController) }
+        composable("exerciseProgramsView") { List(navController) }
         //composable("statsView") { StatsView(navController) }
     }
 }

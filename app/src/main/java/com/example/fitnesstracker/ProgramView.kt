@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.fitnesstracker.Dataprovider.programs
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
@@ -36,7 +37,7 @@ class ProgramView : ComponentActivity(){
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    List()
+
                 }
             }
         }
@@ -59,18 +60,21 @@ fun ProgramsList (name:String, modifier: Modifier = Modifier){
     }
 }
 @Composable
-fun List () {
+fun List (navController: NavController) {
     LazyColumn {
         items(programs) { program ->
             ProgramsList(name = program.name)
         }
     }
+    Button(onClick = { navController.popBackStack() }) {
+        Text(text = "Back")
+    }
 }
 
-    @Preview(showBackground = true)
-    @Composable
-    fun ProgramPreview() {
-        FitnessTrackerTheme {
-            List()
-        }
+@Preview(showBackground = true)
+@Composable
+fun ProgramPreview() {
+    FitnessTrackerTheme {
+        //List(navController = )
     }
+}
