@@ -69,13 +69,6 @@ fun List (navController: NavController) {
             ProgramsList(name = program.name)
         }
     }
-    /*Button(
-        onClick = {navController.popBackStack()},
-        modifier = Modifier
-            .padding(10.dp)
-    ){
-        Text(text = "Back")
-    }*/
 }
 
 @Preview(showBackground = true)

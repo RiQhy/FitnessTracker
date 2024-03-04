@@ -41,7 +41,7 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 
 
         setContent {
-            StatsViewScreen(totalSteps.toInt() - previousTotalSteps.toInt())
+            StatsViewStuff(totalSteps.toInt() - previousTotalSteps.toInt())
         }
 
         loadData()
@@ -92,10 +92,14 @@ class StatsView : AppCompatActivity(), SensorEventListener {
         val savedNumber = sharedPreferences.getFloat("Key1", 0f)
         previousTotalSteps = savedNumber
     }
+    @Composable
+    fun StatsViewScreen(navController: NavController) {
+        StatsViewStuff(totalSteps.toInt() - previousTotalSteps.toInt())
+    }
 }
 
 @Composable
-fun StatsViewScreen(currentSteps: Int, totalSteps: Int = 10000) {
+fun StatsViewStuff(currentSteps: Int, totalSteps: Int = 10000) {
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         // Convert currentSteps to progress between 0f and 1f
         val progress = currentSteps.toFloat() / totalSteps.toFloat()
