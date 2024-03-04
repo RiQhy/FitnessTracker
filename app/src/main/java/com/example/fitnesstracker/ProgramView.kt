@@ -2,13 +2,14 @@ package com.example.fitnesstracker
 
 import android.media.Image
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -18,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,26 +47,33 @@ class ProgramView : ComponentActivity(){
 
 
 @Composable
-fun ProgramsList (name:String, modifier: Modifier = Modifier){
-    Card (modifier = Modifier.size(width = 240.dp, height = 100.dp)
+fun ProgramsList (name:String, modifier: Modifier = Modifier,onNavigateToDetails: (String) -> Unit){
+    Card (modifier = Modifier
+        .size(width = 240.dp, height = 100.dp)
         .padding(10.dp)
         .clickable { TODO("ViewModel and api for clicking data") },
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp)
+            defaultElevation = 6.dp),
+
             )
     {
-        Text(
-            text = name
+        Text(modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = name 
         )
     }
 }
 @Composable
-fun List () {
-    LazyColumn {
+fun List (modifier: Modifier = Modifier, onNavigateToDetails: (String) -> Unit) {
+    LazyColumn (modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         items(programs) { program ->
-            ProgramsList(name = program.name)
+            ProgramsList(name = program.name,onNavigateToDetails = onNavigateToDetails)
         }
     }
+}
+
+@Composable
+fun ExerciseSelect (name:String, modifier: Modifier = Modifier) {
+    Text(text = "Do out")
 }
 
     @Preview(showBackground = true)
@@ -74,3 +83,11 @@ fun List () {
             List()
         }
     }
+
+@Preview(showBackground = true)
+@Composable
+fun ExercisePreview(){
+    FitnessTrackerTheme {
+        ExerciseSelect(name =" monkey")
+    }
+}
