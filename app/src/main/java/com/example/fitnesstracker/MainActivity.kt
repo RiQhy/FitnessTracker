@@ -47,6 +47,7 @@ fun Navigation() {
         composable("exerciseProgramsView") { List(navController) }
         composable("statsView") { StatsView().StatsViewScreen(navController) }
     }
+
 }
 @Composable
 fun ProgramsButton(onClick: () -> Unit) {
