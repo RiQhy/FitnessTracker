@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import com.example.fitnesstracker.ApiData.service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,8 +15,8 @@ import androidx.lifecycle.viewModelScope
 class ViewModel : ViewModel() {
     private val repository : SrRepository = SrRepository()
     var search : String by mutableStateOf("")
-    var uiState : String by mutableStateOf("")
-    private set
+    val uiState = MutableLiveData<ApiResponse>()
+
     class SrRepository {
         suspend fun hitCountCheck(name: String):ApiResponse.Reply{
             return service.getPrograms(name)
@@ -29,10 +30,12 @@ class ViewModel : ViewModel() {
                 Log.d("DBG",serverResp.toString())
                 println(serverResp)
                 println(serverResp.query.searchinfo.exercises)
-                uiState = serverResp.query.searchinfo.exercises
+                uiState.postValue(ApiResponse)
             } catch (e: Exception){
                 println(e.stackTrace)
             }
         }
     }
 }
+
+//serverResp.query.searchinfo.exercises

@@ -89,7 +89,7 @@ fun List (name:String, viewModel: ViewModel, onNavigateToDetails: (String) -> Un
 
 @Composable
 fun ExerciseSelect (name:String, modifier: Modifier = Modifier, viewModel: ViewModel) {
-    Text(text = "${viewModel.search}: kamta: ${viewModel.uiState}")
+    Text(text = "${viewModel.search}: kamta: ${viewModel.uiState.value}")
 }
 
    // @Preview(showBackground = true)
