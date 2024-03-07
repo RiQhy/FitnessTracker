@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FitnessTrackerTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -41,8 +40,13 @@ class MainActivity : ComponentActivity() {
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "frontView") {
-        composable("frontView") { Frontview(navController) }
+    NavHost(navController = navController, startDestination = "splash") {
+        composable("splash") { SplashScreen(navController)}
+        composable("signUp") { SignUpScreen(navController) { username -> navController.navigate("frontView/$username") } }
+        composable("frontView/{username}") { backStackEntry ->
+            val username = backStackEntry.arguments?.getString("username") ?: ""
+            Frontview(navController, username)
+        }
         composable("settings") { SettingsScreen(navController)}
         composable("exerciseProgramsView") { List(navController) }
         composable("statsView") { StatsView().StatsViewScreen(navController) }
@@ -81,10 +85,13 @@ fun SettingsButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun Frontview(navController: NavController) {
+fun Frontview(navController: NavController, username: String) {
     Box(
         modifier = Modifier.padding(16.dp)
     ) {
+        // Display the username
+        Text(text = "Hello, $username!", modifier = Modifier.align(Alignment.TopStart))
+
         Column(
             modifier = Modifier
                 .align(Alignment.TopEnd)
@@ -102,12 +109,10 @@ fun Frontview(navController: NavController) {
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun FrontviewPreview() {
     FitnessTrackerTheme {
-        Navigation()
+//        Navigation()
     }
 }
