@@ -1,7 +1,7 @@
 
 package com.example.fitnesstracker
 
-
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -161,8 +161,9 @@ fun SettingsScreen(navController: NavController) {
         ) { innerPadding ->
             // Column for arranging elements vertically
             Column(
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier.padding(innerPadding)
             ) {
+                Log.d("", backgroundColor.toString())
                 // Dark theme switch
                 DarkThemeSwitch(isChecked = isChecked, onCheckedChange = { isChecked = it })
                 // Labeled text fields for weight, height, and gender
