@@ -46,24 +46,24 @@ fun List (navController: NavController) {
             BottomAppBar(
                 actions = {
                     IconButton(onClick = { navController.navigate("frontView") }) {
-                        Icon(Icons.Filled.Home, contentDescription = "Localized description")
+                        Icon(Icons.Filled.Home, contentDescription = "Takes you to frontpage")
                     }
                     IconButton(onClick = { navController.navigate("settings") }) {
                         Icon(
                             Icons.Filled.Settings,
-                            contentDescription = "Localized description",
+                            contentDescription = "Takes you to settings page",
                         )
                     }
                     IconButton(onClick = { navController.navigate("exerciseProgramsView") }) {
                         Icon(
                             Icons.Filled.Star,
-                            contentDescription = "Localized description",
+                            contentDescription = "Takes you to exercise programs page",
                         )
                     }
                     IconButton(onClick = { navController.navigate("statsView") }) {
                         Icon(
                             Icons.Filled.Favorite,
-                            contentDescription = "Localized description",
+                            contentDescription = "Takes you to status page",
                         )
                     }
                 },
