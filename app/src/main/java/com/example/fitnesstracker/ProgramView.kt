@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,8 +34,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,10 +67,14 @@ class ProgramView : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ) {
-                    NavHost(navController = navController, startDestination = "List") {
+                )  {
+                    Scaffold(floatingActionButton =  {FloatingActionButton(onClick = { navController.popBackStack()}) {
+                        Icon(Icons.Default.ArrowBack,"Back Button")
+                    } }) { innerPadding ->
+                    NavHost(modifier = Modifier.padding(paddingValues = innerPadding),
+                        navController = navController, startDestination = "List") {
                         composable("List") {
-                            List(viewModel = viewModel, name = String()) { name ->
+                            List(modifier = Modifier, viewModel = viewModel, name = String()) { name ->
                                 navController.navigate("ExerciseSelect/$name")
                             }
                         }
@@ -74,8 +83,9 @@ class ProgramView : ComponentActivity() {
                             arguments = listOf(navArgument("name") { type = NavType.StringType })
                         ) { backStackEntry ->
                             val name = backStackEntry.arguments?.getString("name") ?: ""
-                            ExerciseSelect(viewModel = viewModel, name = name)
+                            ExerciseSelect(modifier = Modifier,viewModel = viewModel, name = name)
                         }
+                    }
                     }
                 }
             }
@@ -88,23 +98,30 @@ class ProgramView : ComponentActivity() {
 fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (String) -> Unit) {
     Card(
         modifier = Modifier
-            .size(width = 240.dp, height = 100.dp)
+            .size(width = 280.dp, height = 170.dp)
             .padding(10.dp)
             .clickable { viewModel.getPrograms(name); onNavigateToDetails.invoke(name) }, // Pass the program name to the click listener
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
-        ),
-    ) {
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = name
+        ), colors = CardDefaults.cardColors(
+            containerColor = Color.LightGray
         )
+    )  {
+        Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()
+            ,verticalArrangement = Arrangement.Center
+        ){
+            Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            fontSize=20.sp, fontWeight=FontWeight.Bold, fontStyle = FontStyle.Normal,
+            text = name
+        )}
+
     }
 }
 
 @Composable
-fun List(name: String, viewModel: ViewModel, onNavigateToDetails: (String) -> Unit) {
-    LazyColumn(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+fun List(modifier: Modifier,name: String,viewModel: ViewModel, onNavigateToDetails: (String) -> Unit) {
+    LazyColumn(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally,) {
         items(programs) { program ->
             ProgramsList(name = program.name, viewModel, onNavigateToDetails = onNavigateToDetails)
         }
@@ -128,9 +145,10 @@ fun ExerciseSelect(name: String, modifier: Modifier = Modifier, viewModel: ViewM
             var isChecked by remember { mutableStateOf(false) }
             Box(){
                 ElevatedCard (modifier = Modifier
-                    .background(if (isChecked) Color.Gray else Color.White).fillMaxWidth()
-                .clickable { isChecked = !isChecked; Log.d("DBG",isChecked.toString())}
-                .padding(14.dp)){
+                    .background(if (isChecked) Color.Gray else Color.White)
+                    .fillMaxWidth()
+                    .clickable { isChecked = !isChecked; Log.d("DBG", isChecked.toString()) }
+                    .padding(14.dp)){
                 Text(fontSize=25.sp ,text = "Exercise: $exercise")
                 if (isChecked) {
                     // Overlay a check mark when the card is checked
