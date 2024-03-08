@@ -6,6 +6,6 @@ object Dataprovider{
     init {
         programs.add(Program("Program_Arms"))
         programs.add(Program("Program_Uperbody"))
-        programs.add(Program("Program_Legs"))
+        programs.add(Program("Program_Leggs"))
     }
 }
