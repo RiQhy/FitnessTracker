@@ -101,7 +101,7 @@ fun DarkThemeSwitch(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Medium,
                     fontSize = 13.sp,
-//                    color = if (isChecked) Color.White else Color.Black
+                    //color = if (isChecked) Color.White else Color.Black
                 )
             )
             // Switch for toggling between modes
@@ -161,7 +161,7 @@ fun SettingsScreen(navController: NavController) {
         ) { innerPadding ->
             // Column for arranging elements vertically
             Column(
-                modifier = Modifier.padding(innerPadding)
+                modifier = Modifier.padding(innerPadding).background(backgroundColor)
             ) {
                 Log.d("", backgroundColor.toString())
                 // Dark theme switch
