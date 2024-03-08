@@ -8,10 +8,14 @@ import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fitnesstracker.ApiData.service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -68,17 +72,7 @@ class MyViewModel : ViewModel() {
         const val SCAN_PERIOD: Long = 5000
     }
 }
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
-import com.example.fitnesstracker.ApiData.service
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+
 
 class ViewModel : ViewModel() {
     private val repository : SrRepository = SrRepository()

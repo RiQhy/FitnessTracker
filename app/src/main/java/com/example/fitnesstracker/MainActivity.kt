@@ -3,6 +3,7 @@ package com.example.fitnesstracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
 class MainActivity : ComponentActivity() {
+    val viewModel: ViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,16 +49,16 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-@Composable
-fun Navigation() {
-    val navController = rememberNavController()
-
-    NavHost(modifier = Modifier.background(color = Color.DarkGray), navController = navController, startDestination = "frontView") {
-        composable("frontView") { Frontview(navController) }
-        composable("settings") { SettingsScreen(navController) }
-        composable("exerciseProgramsView") { List(navController) }
-        composable("statsView") { StatsView().StatsViewScreen(navController) }
+    @Composable
+    fun Navigation() {
+        val navController = rememberNavController()
+        NavHost(modifier = Modifier.background(color = Color.DarkGray), navController = navController, startDestination = "frontView") {
+            composable("frontView") { Frontview(navController) }
+            composable("settings") { SettingsScreen(navController) }
+            composable("exerciseProgramsView") { List(navController, modifier = Modifier, viewModel = viewModel, name = String()){ name ->
+                navController.navigate("ExerciseSelect/$name") }}
+            composable("statsView") { StatsView().StatsViewScreen(navController) }
+        }
     }
 }
 
@@ -124,6 +126,6 @@ fun Frontview(navController: NavController) {
 @Composable
 fun FrontviewPreview() {
     FitnessTrackerTheme {
-        Navigation()
+        //Navigation()
     }
 }
