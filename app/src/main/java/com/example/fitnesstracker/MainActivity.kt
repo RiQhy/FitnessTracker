@@ -20,9 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,34 +51,34 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun Navigation() {
-    val navController = rememberNavController()
-    val userDao = AppDatabase.getInstance(LocalContext.current).userDao()
-    val userRepository = UserRepository(userDao)
-    val viewModel: SignUpViewModel = remember { SignUpViewModel(userRepository) }
+    @Composable
+    fun Navigation() {
+        val navController = rememberNavController()
+        val userDao = AppDatabase.getInstance(LocalContext.current).userDao()
+        val userRepository = UserRepository(userDao)
+        val suViewModel: SignUpViewModel = remember { SignUpViewModel(userRepository) }
 
-    NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") { SplashScreen(navController)}
-        composable("signUp") { SignUpScreen(navController, viewModel) } // <- Corrected
-        composable("frontView/{username}") { backStackEntry ->
-            val username = backStackEntry.arguments?.getString("username") ?: ""
-            Frontview(navController, username)
+        NavHost(navController = navController, startDestination = "splash") {
+            composable("splash") { SplashScreen(navController) }
+            composable("signUp") { SignUpScreen(navController, suViewModel) } // <- Corrected
+            composable("frontView/{username}") { backStackEntry ->
+                val username = backStackEntry.arguments?.getString("username") ?: ""
+                Frontview(navController, username)
+            }
+            composable("settings") { SettingsScreen(navController) }
+            composable("exerciseProgramsView") {
+                List(
+                    navController,
+                    modifier = Modifier,
+                    viewModel = viewModel,
+                    name = String()
+                ) { name ->
+                    navController.navigate("ExerciseSelect/$name")
+                }
+            }
+            composable("statsView") { StatsView().StatsViewScreen(navController) }
         }
-        composable("settings") { SettingsScreen(navController)}
-        composable("exerciseProgramsView") {
-            List(
-            navController,
-            modifier = Modifier,
-            viewModel = viewModel,
-            name = String()
-        ) { name ->
-            navController.navigate("ExerciseSelect/$name")
-        }
-        }
-        composable("statsView") { StatsView().StatsViewScreen(navController) }
     }
 }
 
