@@ -1,33 +1,23 @@
 package com.example.fitnesstracker
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.fitnesstracker.db.AppDatabase
 import com.example.fitnesstracker.db.User
-import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpScreen(navController: NavController, onSignUpSuccess: (String)->Unit) {
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    val userDao = AppDatabase.getInstance(context).userDao()
+fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel) {
 
     var name by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
@@ -35,18 +25,16 @@ fun SignUpScreen(navController: NavController, onSignUpSuccess: (String)->Unit) 
     var age by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
 
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Background image
         Image(
             painter = painterResource(id = R.drawable.on_boarding_image3),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentDescription = "dumBells_image_back",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
         )
-
-        // User input fields
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -86,8 +74,10 @@ fun SignUpScreen(navController: NavController, onSignUpSuccess: (String)->Unit) 
             Text("Gender")
             Spacer(modifier = Modifier.height(8.dp))
             Row {
-                val selectedButtonColor = MaterialTheme.colorScheme.primary // Change to your desired color
-                val unselectedButtonColor = MaterialTheme.colorScheme.secondary // Change to your desired color
+                val selectedButtonColor =
+                    MaterialTheme.colorScheme.primary // Change to your desired color
+                val unselectedButtonColor =
+                    MaterialTheme.colorScheme.secondary // Change to your desired color
 
                 Button(
                     onClick = { gender = "Man" },
@@ -109,30 +99,39 @@ fun SignUpScreen(navController: NavController, onSignUpSuccess: (String)->Unit) 
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Submit Button
             Button(onClick = {
                 if (name.isNotBlank() && height.isNotBlank() && weight.isNotBlank() && age.isNotBlank() && gender.isNotBlank()) {
-                    coroutineScope.launch {
-                        // Perform database operation asynchronously
-                        val trimmedHeight = height.trim()
-                        val trimmedWeight = weight.trim()
-                        val trimmedAge = age.trim()
-
-                        val user = User(
+                    viewModel.signUpUser(
+                        User(
                             name = name,
-                            height = trimmedHeight.toInt(),
-                            weight = trimmedWeight.toInt(),
-                            age = trimmedAge.toInt(),
+                            height = height.toInt(),
+                            weight = weight.toInt(),
+                            age = age.toInt(),
                             gender = gender
                         )
-                        userDao.insertUser(user)
-                        // Navigate to the desired screen upon successful insertion
-                        onSignUpSuccess(name)
+                    ) { username ->
+                        navController.navigate("frontView/$username")
                     }
                 } else {
-                    Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
+                    errorMessage = "All fields are required"
                 }
             }) {
                 Text("Submit")
+            }
+
+            // Display Error Message
+            errorMessage?.let { message ->
+                Snackbar(
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Text(
+                        text = message,
+                        color = Color.White
+                    )
+                }
             }
         }
     }
