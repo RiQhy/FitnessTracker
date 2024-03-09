@@ -128,7 +128,9 @@ fun SettingsScreen(navController: NavController) {
     // Surface for displaying settings
     Surface(
         color = backgroundColor,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor)
     ) {
         Scaffold(
             bottomBar = {
@@ -161,7 +163,7 @@ fun SettingsScreen(navController: NavController) {
         ) { innerPadding ->
             // Column for arranging elements vertically
             Column(
-                modifier = Modifier.padding(innerPadding).background(backgroundColor)
+                modifier = Modifier.padding(innerPadding).background(backgroundColor).fillMaxSize()
             ) {
                 Log.d("", backgroundColor.toString())
                 // Dark theme switch
