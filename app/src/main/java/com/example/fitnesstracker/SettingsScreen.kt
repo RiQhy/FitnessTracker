@@ -134,7 +134,7 @@ fun SettingsScreen(navController: NavController) {
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        IconButton(onClick = { navController.navigate("frontView") }) {
+                        IconButton(onClick = { navController.navigate("frontView/{username}") }) {
                             Icon(Icons.Filled.Home, contentDescription = "Takes you to frontpage")
                         }
                         IconButton(onClick = { navController.navigate("settings") }) {

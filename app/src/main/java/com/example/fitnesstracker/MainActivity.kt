@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,21 +47,37 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
-@Composable
-fun Navigation() {
-    val navController = rememberNavController()
+    @Composable
+    fun Navigation() {
+        val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") { SplashScreen(navController)}
-        composable("signUp") { SignUpScreen(navController) { username -> navController.navigate("frontView/$username") } }
-        composable("frontView/{username}") { backStackEntry ->
-            val username = backStackEntry.arguments?.getString("username") ?: ""
-            Frontview(navController, username)
+        NavHost(navController = navController, startDestination = "splash") {
+            composable("splash") { SplashScreen(navController) }
+            composable("signUp") {
+                SignUpScreen(navController) { username ->
+                    navController.navigate(
+                        "frontView/$username"
+                    )
+                }
+            }
+            composable("frontView/{username}") { backStackEntry ->
+                val username = backStackEntry.arguments?.getString("username") ?: ""
+                Frontview(navController, username)
+            }
+            composable("settings") { SettingsScreen(navController) }
+            composable("exerciseProgramsView") {
+                List(
+                    navController,
+                    modifier = Modifier,
+                    viewModel = viewModel,
+                    name = String()
+                ) { name ->
+                    navController.navigate("ExerciseSelect/$name")
+
+                }
+            }
+            composable("statsView") { StatsView().StatsViewScreen(navController) }
         }
-        composable("settings") { SettingsScreen(navController)}
-        composable("exerciseProgramsView") { List(navController) }
-        composable("statsView") { StatsView().StatsViewScreen(navController) }
     }
 }
 
