@@ -11,14 +11,21 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.fitnesstracker.db.AppDatabase
+import com.example.fitnesstracker.db.UserRepository
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,13 +43,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    val userDao = AppDatabase.getInstance(LocalContext.current).userDao()
+    val userRepository = UserRepository(userDao)
+    val viewModel: SignUpViewModel = remember { SignUpViewModel(userRepository) }
 
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") { SplashScreen(navController)}
-        composable("signUp") { SignUpScreen(navController) { username -> navController.navigate("frontView/$username") } }
+        composable("signUp") { SignUpScreen(navController, viewModel) } // <- Corrected
         composable("frontView/{username}") { backStackEntry ->
             val username = backStackEntry.arguments?.getString("username") ?: ""
             Frontview(navController, username)
@@ -52,7 +63,8 @@ fun Navigation() {
         composable("statsView") { StatsView().StatsViewScreen(navController) }
     }
 }
-@Composable
+
+    @Composable
 fun ProgramsButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
         onClick = { onClick() },
@@ -63,6 +75,7 @@ fun ProgramsButton(onClick: () -> Unit) {
             .fillMaxWidth()
     )
 }
+
 @Composable
 fun StatsButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
@@ -74,6 +87,7 @@ fun StatsButton(onClick: () -> Unit) {
             .fillMaxWidth()
     )
 }
+
 @Composable
 fun SettingsButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
