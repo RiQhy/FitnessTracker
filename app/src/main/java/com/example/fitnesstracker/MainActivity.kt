@@ -49,16 +49,21 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    @Composable
-    fun Navigation() {
-        val navController = rememberNavController()
-        NavHost(modifier = Modifier.background(color = Color.DarkGray), navController = navController, startDestination = "frontView") {
-            composable("frontView") { Frontview(navController) }
-            composable("settings") { SettingsScreen(navController) }
-            composable("exerciseProgramsView") { List(navController, modifier = Modifier, viewModel = viewModel, name = String()){ name ->
-                navController.navigate("ExerciseSelect/$name") }}
-            composable("statsView") { StatsView().StatsViewScreen(navController) }
+}
+@Composable
+fun Navigation() {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "splash") {
+        composable("splash") { SplashScreen(navController)}
+        composable("signUp") { SignUpScreen(navController) { username -> navController.navigate("frontView/$username") } }
+        composable("frontView/{username}") { backStackEntry ->
+            val username = backStackEntry.arguments?.getString("username") ?: ""
+            Frontview(navController, username)
         }
+        composable("settings") { SettingsScreen(navController)}
+        composable("exerciseProgramsView") { List(navController) }
+        composable("statsView") { StatsView().StatsViewScreen(navController) }
     }
 }
 
@@ -97,11 +102,14 @@ fun SettingsButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun Frontview(navController: NavController) {
+fun Frontview(navController: NavController, username: String) {
     Box(
         modifier = Modifier
             .padding(16.dp)
     ) {
+        // Display the username
+        Text(text = "Hello, $username!", modifier = Modifier.align(Alignment.TopStart))
+
         Column(
             modifier = Modifier
                 .align(Alignment.TopEnd)
@@ -120,12 +128,10 @@ fun Frontview(navController: NavController) {
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun FrontviewPreview() {
     FitnessTrackerTheme {
-        //Navigation()
+//        Navigation()
     }
 }
