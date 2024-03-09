@@ -1,61 +1,61 @@
 package com.example.fitnesstracker
 
 
+import android.Manifest
+import android.app.AlertDialog
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
-import androidx.navigation.NavController
-import android.Manifest
-import android.app.AlertDialog
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
-import android.content.pm.PackageManager
-import android.util.Log
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
-import androidx.activity.viewModels
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavController
+
+
 
 class StatsView : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
@@ -68,12 +68,12 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-         val permissionsGranted = HashMap<String, Boolean>()
-         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-         val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
-         val viewModel: MyViewModel by viewModels()
-         val gattClientCallback = GattClientCallback(this, viewModel)
-         val requiredPermissions: Array<String> = arrayOf(
+        val permissionsGranted = HashMap<String, Boolean>()
+        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
+        val viewModel: MyViewModel by viewModels()
+        val gattClientCallback = GattClientCallback(this, viewModel)
+        val requiredPermissions: Array<String> = arrayOf(
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_ADMIN,
             Manifest.permission.BLUETOOTH_SCAN,
@@ -94,28 +94,8 @@ class StatsView : AppCompatActivity(), SensorEventListener {
                 }
             }
         setContent {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding()
-                    .fillMaxSize()
-            ) {
-
-                ListView(
-                    viewModel,
-                    requestPermissionsLauncher,
-                    requiredPermissions,
-                    permissionsGranted,
-                    bluetoothAdapter,
-                    gattClientCallback
-                ) {
-
-                }
-
-
-
-
-
+            MaterialTheme {
+                HeartRateStuff(viewModel)
             }
             requestPermissionsLauncher.launch(requiredPermissions)
 
@@ -173,12 +153,52 @@ class StatsView : AppCompatActivity(), SensorEventListener {
         previousTotalSteps = savedNumber
     }
 
-    @Composable
-    fun StatsViewScreen(navController: NavController) {
-        StatsViewStuff(totalSteps.toInt() - previousTotalSteps.toInt())
-        HeartRateStuff()
 
-    }
+        @Composable
+        fun StatsViewScreen(navController: NavController) {
+            Scaffold(
+                bottomBar = {
+                    BottomAppBar(
+                        actions = {
+                            IconButton(onClick = { navController.navigate("frontView") }) {
+                                Icon(Icons.Filled.Home, contentDescription = "Takes you to frontpage")
+                            }
+                            IconButton(onClick = { navController.navigate("settings") }) {
+                                Icon(
+                                    Icons.Filled.Settings,
+                                    contentDescription = "Takes you to settings page",
+                                )
+                            }
+                            IconButton(onClick = { navController.navigate("exerciseProgramsView") }) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Takes you to exercise programs page",
+                                )
+                            }
+                            IconButton(onClick = { navController.navigate("statsView") }) {
+                                Icon(
+                                    Icons.Filled.Favorite,
+                                    contentDescription = "Takes you to status page",
+                                )
+                            }
+                        },
+                    )
+                },
+            ) { innerPadding ->
+                Column(
+                    modifier = Modifier.padding(innerPadding),
+                ){
+                    Column {
+                        HeartRateStuff(MyViewModel())
+                        StatsViewStuff(totalSteps.toInt() - previousTotalSteps.toInt())
+                    }
+
+
+                }
+            }
+        }
+
+
 
     @Composable
     fun ListView(
@@ -318,9 +338,26 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 
 
     @Composable
-    fun HeartRateStuff() {
+    fun HeartRateStuff(viewModel: MyViewModel) {
+        // Assuming viewModel has a LiveData or State holding heart rate value
+        val heartRate by viewModel.mBPM.observeAsState(initial = 0)
 
-
+        Box(contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Heart Rate",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                // Display the heart rate value
+                Text(
+                    text = "$heartRate BPM",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Red
+                )
+            }
+        }
     }
 
 
@@ -329,7 +366,7 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 
 
 
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+        Box(contentAlignment = Alignment.Center) {
             // Convert currentSteps to progress between 0f and 1f
             val progress = currentSteps.toFloat() / totalSteps.toFloat()
 
