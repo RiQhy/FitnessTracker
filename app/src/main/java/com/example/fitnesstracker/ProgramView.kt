@@ -63,25 +63,38 @@ import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 class ProgramView : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val viewModel: ViewModel by viewModels()
-
-        Log.d("DBG1", viewModel.uiState.value.toString())
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            FitnessTrackerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                )  {
-                    Scaffold(floatingActionButton =  {FloatingActionButton(onClick = { navController.popBackStack()}) {
-                        Icon(Icons.Default.ArrowBack,"Back Button")
-                    } }) { innerPadding ->
-                    NavHost(modifier = Modifier.padding(paddingValues = innerPadding),
-                        navController = navController, startDestination = "List") {
+        }
+    }
+
+
+    @Composable
+    fun BothProgramsWorking(navController: NavController, viewModel: ViewModel) {
+        val nvController = rememberNavController()
+        FitnessTrackerTheme {
+            // A surface container using the 'background' color from the theme
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                Scaffold(floatingActionButton = {
+                    FloatingActionButton(onClick = { nvController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, "Back Button")
+                    }
+                }) { innerPadding ->
+                    NavHost(
+                        modifier = Modifier.padding(paddingValues = innerPadding),
+                        navController = nvController, startDestination = "List"
+                    ) {
                         composable("List") {
-                            List(navController, modifier = Modifier, viewModel = viewModel, name = String()) { name ->
-                                navController.navigate("ExerciseSelect/$name")
+                            List(
+                                navController,
+                                modifier = Modifier,
+                                viewModel = viewModel,
+                                name = String()
+                            ) { name ->
+                                nvController.navigate("ExerciseSelect/$name")
                             }
                         }
                         composable(
@@ -89,17 +102,14 @@ class ProgramView : ComponentActivity() {
                             arguments = listOf(navArgument("name") { type = NavType.StringType })
                         ) { backStackEntry ->
                             val name = backStackEntry.arguments?.getString("name") ?: ""
-                            ExerciseSelect(modifier = Modifier,viewModel = viewModel, name = name)
+                            ExerciseSelect(modifier = Modifier, viewModel = viewModel, name = name)
                         }
-                    }
                     }
                 }
             }
         }
     }
 }
-
-
 @Composable
 fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (String) -> Unit) {
     Card(
@@ -170,7 +180,7 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
         }
     }
 }
-    @Composable
+@Composable
     fun ExerciseSelect(name: String, modifier: Modifier = Modifier, viewModel: ViewModel) {
         Log.d("DBG", viewModel.uiState.value.toString())
         var selected = listOf<String>()

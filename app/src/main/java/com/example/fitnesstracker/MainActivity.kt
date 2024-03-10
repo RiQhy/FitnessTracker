@@ -67,16 +67,7 @@ class MainActivity : ComponentActivity() {
                 Frontview(navController, username)
             }
             composable("settings") { SettingsScreen(navController) }
-            composable("exerciseProgramsView") {
-                List(
-                    navController,
-                    modifier = Modifier,
-                    viewModel = viewModel,
-                    name = String()
-                ) { name ->
-                    navController.navigate("ExerciseSelect/$name")
-                }
-            }
+            composable("exerciseProgramsView") {ProgramView().BothProgramsWorking(navController, viewModel)}
             composable("statsView") { StatsView().StatsViewScreen(navController) }
         }
     }
