@@ -1,6 +1,6 @@
 package com.example.fitnesstracker
 
-import StatsViewScreen
+
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
