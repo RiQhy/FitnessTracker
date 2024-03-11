@@ -4,10 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-data class ApiResponse (
-    val name: String,
-    val exercises: String
-)
+
     data class Reply (
         val batchcomplete: String, val replyContinue: Continue, val query: Query
             )

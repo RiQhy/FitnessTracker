@@ -83,7 +83,7 @@ class ViewModel : ViewModel() {
             return service.getPrograms(name)
         }
     }
-
+//getPrograms calls API for all data and provides it for the next view.
     fun getPrograms(name: String){
         viewModelScope.launch(Dispatchers.IO){
             try {
@@ -91,7 +91,7 @@ class ViewModel : ViewModel() {
                 val serverResp = repository.hitCountCheck(name)
                 Log.d("DBG2",serverResp.toString())
                 println(serverResp)
-                //println(serverResp.query.searchinfo.exercises)
+                //println(serverResp.query.searchinfo.exercises)-old print causing error.
                 uiState.postValue(serverResp)
             } catch (e: Exception){
                 Log.d("DBG",e.message.toString())
