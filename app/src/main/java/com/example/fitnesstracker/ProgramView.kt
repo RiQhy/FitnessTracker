@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -45,6 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.colorspace.Illuminant.C
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,6 +59,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.fitnesstracker.Dataprovider.programs
+import com.example.fitnesstracker.ui.theme.ColorConstants
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
 
@@ -120,10 +123,12 @@ fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (Strin
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ), colors = CardDefaults.cardColors(
-            containerColor = Color.LightGray
+            containerColor = MaterialTheme.colorScheme.secondary
         )
     )  {
-        Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
             ,verticalArrangement = Arrangement.Center
         ){
             Text(
@@ -167,7 +172,9 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier.fillMaxWidth().padding(innerPadding),
+            modifier
+                .fillMaxWidth()
+                .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             items(programs) { program ->
@@ -183,6 +190,7 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
 @Composable
     fun ExerciseSelect(name: String, modifier: Modifier = Modifier, viewModel: ViewModel) {
         Log.d("DBG", viewModel.uiState.value.toString())
+    //gets a list of all values under one spesific Program_.
         var selected = listOf<String>()
         viewModel.uiState.value?.forEach { item ->
             if (item.name == name) {
@@ -198,6 +206,7 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
                     Box() {
                         ElevatedCard(modifier = Modifier
                             .background(if (isChecked) Color.Gray else Color.White)
+                            .fillMaxWidth()
                             .fillMaxWidth()
                             .clickable {
                                 isChecked = !isChecked; Log.d(
@@ -226,15 +235,6 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
         }
 
     }
-
-// @Preview(showBackground = true)
-//  @Composable
-//  fun ProgramPreview() {
-//     FitnessTrackerTheme {
-//       List(viewModel = ViewModel())
-//     }
-// }
-
     @Preview(showBackground = true)
     @Composable
     fun ExercisePreview() {
