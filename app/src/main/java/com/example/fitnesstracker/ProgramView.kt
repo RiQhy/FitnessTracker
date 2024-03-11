@@ -137,6 +137,7 @@ fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (Strin
 
 @Composable
 fun List(navController: NavController, modifier: Modifier,name: String,viewModel: ViewModel, onNavigateToDetails: (String) -> Unit) {
+    // Bottom bar navigation
     Scaffold(
         bottomBar = {
             BottomAppBar(

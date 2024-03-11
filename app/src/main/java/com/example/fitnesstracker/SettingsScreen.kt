@@ -132,6 +132,7 @@ fun SettingsScreen(navController: NavController) {
             .fillMaxSize()
             .background(backgroundColor)
     ) {
+        // Bottom bar navigation
         Scaffold(
             bottomBar = {
                 BottomAppBar(

@@ -52,6 +52,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    //Navigation for frontview
     @Composable
     fun Navigation() {
         val navController = rememberNavController()
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Button to take you to exercise programs view
 @Composable
 fun ProgramsButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
@@ -85,6 +87,7 @@ fun ProgramsButton(onClick: () -> Unit) {
     )
 }
 
+// Button to take you to status view
 @Composable
 fun StatsButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
@@ -97,6 +100,7 @@ fun StatsButton(onClick: () -> Unit) {
     )
 }
 
+// Button to take you to settings view
 @Composable
 fun SettingsButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
@@ -107,6 +111,7 @@ fun SettingsButton(onClick: () -> Unit) {
     )
 }
 
+// Frontview
 @Composable
 fun Frontview(navController: NavController, username: String) {
     Box(

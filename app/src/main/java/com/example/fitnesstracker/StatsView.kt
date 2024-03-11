@@ -177,6 +177,7 @@ class StatsView : AppCompatActivity(), SensorEventListener {
 
     @Composable
     fun StatsViewScreen(navController: NavController) {
+        // Bottom bar navigation
         Scaffold(
             bottomBar = {
                 BottomAppBar(
