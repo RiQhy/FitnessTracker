@@ -51,11 +51,13 @@ fun SplashScreen(navController: NavController) {
                 // Navigate to the onboarding screen
                 navController.navigate("signUp")
             },
-            modifier = Modifier
+            modifier = Modifier.fillMaxWidth(0.8f)
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp)
         ) {
-            Text("Start")
+            Text("Start",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp)
         }
     }
 }

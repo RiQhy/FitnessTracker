@@ -21,9 +21,11 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestMultiple
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -182,31 +184,36 @@ class StatsView : AppCompatActivity(), SensorEventListener {
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        IconButton(onClick = { navController.navigate("frontView/{username}") }) {
-                            Icon(
-                                Icons.Filled.Home,
-                                contentDescription = "Takes you to frontpage"
-                            )
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceAround,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            IconButton(onClick = { navController.navigate("frontView/{username}") }) {
+                                Icon(
+                                    Icons.Filled.Home,
+                                    contentDescription = "Takes you to frontpage"
+                                )
+                            }
+                            IconButton(onClick = { navController.navigate("settings") }) {
+                                Icon(
+                                    Icons.Filled.Settings,
+                                    contentDescription = "Takes you to settings page",
+                                )
+                            }
+                            IconButton(onClick = { navController.navigate("exerciseProgramsView") }) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Takes you to exercise programs page",
+                                )
+                            }
+                            IconButton(onClick = { }) {
+                                Icon(
+                                    Icons.Filled.Favorite,
+                                    contentDescription = "Takes you to status page",
+                                )
+                            }
                         }
-                        IconButton(onClick = { navController.navigate("settings") }) {
-                            Icon(
-                                Icons.Filled.Settings,
-                                contentDescription = "Takes you to settings page",
-                            )
-                        }
-                        IconButton(onClick = { navController.navigate("exerciseProgramsView") }) {
-                            Icon(
-                                Icons.Filled.Star,
-                                contentDescription = "Takes you to exercise programs page",
-                            )
-                        }
-                        IconButton(onClick = { navController.navigate("statsView") }) {
-                            Icon(
-                                Icons.Filled.Favorite,
-                                contentDescription = "Takes you to status page",
-                            )
-                        }
-                    },
+                    }
                 )
             },
         ) { innerPadding ->
@@ -218,8 +225,6 @@ class StatsView : AppCompatActivity(), SensorEventListener {
                     HeartRateStuff(MyViewModel())
                     StatsViewStuff(totalSteps.toInt() - previousTotalSteps.toInt())
                 }
-
-
             }
         }
     }
