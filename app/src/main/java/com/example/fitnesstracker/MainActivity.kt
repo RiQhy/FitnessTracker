@@ -1,6 +1,5 @@
 package com.example.fitnesstracker
 
-import android.graphics.drawable.Drawable
 
 import android.content.pm.PackageManager
 import android.os.Build
