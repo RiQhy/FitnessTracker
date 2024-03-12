@@ -1,8 +1,12 @@
 package com.example.fitnesstracker
 
+
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -27,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,11 +39,50 @@ import androidx.navigation.compose.rememberNavController
 import com.example.fitnesstracker.db.AppDatabase
 import com.example.fitnesstracker.db.UserRepository
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
+import android.util.Log
 
 class MainActivity : ComponentActivity() {
     val viewModel: ViewModel by viewModels()
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (!isGranted) {
+            // Inform the user that the permission is needed.
+            // You can use a Toast, Dialog, or another method to communicate this.
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val permissionsGranted = HashMap<String, Boolean>()
+        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
+        val viewModel: MyViewModel by viewModels()
+        val gattClientCallback = GattClientCallback(this, viewModel)
+        val requiredPermissions: Array<String> = arrayOf(
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.BLUETOOTH_CONNECT
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
+        }
+        val requestPermissionsLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                permissions.entries.forEach { entry ->
+                    if (entry.value) {
+                        permissionsGranted[entry.key] = entry.value
+                        Log.d("PermissionGranted", "Permission ${entry.key} is granted")
+                    } else {
+                        Log.d("PermissionDenied", "Permission ${entry.key} is denied")
+                    }
+                }
+            }
+
         setContent {
             FitnessTrackerTheme {
                 // A surface container using the 'background' color from the theme
@@ -47,7 +91,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Navigation()
+
                 }
+                requestPermissionsLauncher.launch(requiredPermissions)
             }
         }
     }
@@ -69,7 +115,7 @@ class MainActivity : ComponentActivity() {
             }
             composable("settings") { SettingsScreen(navController) }
             composable("exerciseProgramsView") {ProgramView().BothProgramsWorking(navController, viewModel)}
-            composable("statsView") { StatsView().StatsViewScreen(navController) }
+            composable("statsView") { StatsViewScreen(navController) }
         }
     }
 }
