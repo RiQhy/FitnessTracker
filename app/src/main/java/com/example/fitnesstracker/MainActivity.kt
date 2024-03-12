@@ -40,6 +40,10 @@ import com.example.fitnesstracker.db.AppDatabase
 import com.example.fitnesstracker.db.UserRepository
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
+import android.util.Log
 
 class MainActivity : ComponentActivity() {
     val viewModel: ViewModel by viewModels()
@@ -51,10 +55,34 @@ class MainActivity : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val permissionsGranted = HashMap<String, Boolean>()
+        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
+        val viewModel: MyViewModel by viewModels()
+        val gattClientCallback = GattClientCallback(this, viewModel)
+        val requiredPermissions: Array<String> = arrayOf(
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.BLUETOOTH_CONNECT
+        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
         }
+        val requestPermissionsLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                permissions.entries.forEach { entry ->
+                    if (entry.value) {
+                        permissionsGranted[entry.key] = entry.value
+                        Log.d("PermissionGranted", "Permission ${entry.key} is granted")
+                    } else {
+                        Log.d("PermissionDenied", "Permission ${entry.key} is denied")
+                    }
+                }
+            }
+
         setContent {
             FitnessTrackerTheme {
                 // A surface container using the 'background' color from the theme
@@ -63,7 +91,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Navigation()
+
                 }
+                requestPermissionsLauncher.launch(requiredPermissions)
             }
         }
     }
