@@ -5,10 +5,14 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -31,6 +35,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,6 +51,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,12 +84,15 @@ class ProgramView : ComponentActivity() {
             // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.background,
+
             ) {
-                Scaffold(floatingActionButton = {
-                    FloatingActionButton(onClick = { nvController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, "Back Button")
-                    }
+                Scaffold(floatingActionButtonPosition = FabPosition.EndOverlay , floatingActionButton = {
+                    FloatingActionButton(onClick = { nvController.popBackStack() }
+                    ) {
+                            Icon(Icons.Default.ArrowBack, "Back Button")
+                        }
+
                 }) { innerPadding ->
                     NavHost(
                         modifier = Modifier.padding(paddingValues = innerPadding),
@@ -111,17 +121,19 @@ class ProgramView : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (String) -> Unit) {
+    Box (){
     Card(
         modifier = Modifier
-            .size(width = 280.dp, height = 170.dp)
+            .size(width = 280.dp, height = 150.dp)
             .padding(10.dp)
             .clickable { viewModel.getPrograms(name); onNavigateToDetails.invoke(name) }, // Pass the program name to the click listener
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = 12.dp
         ), colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = MaterialTheme.colorScheme.onSecondaryContainer
         )
     )  {
         Column(modifier = Modifier
@@ -131,11 +143,12 @@ fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (Strin
         ){
             Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            fontSize=20.sp, fontWeight=FontWeight.Bold, fontStyle = FontStyle.Normal,
+            fontSize=20.sp, fontWeight=FontWeight.Bold, fontStyle = FontStyle.Normal, color = MaterialTheme.colorScheme.primary,
             text = name
         )}
 
     }
+}
 }
 
 @Composable
@@ -144,10 +157,13 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
     Scaffold(
         bottomBar = {
             BottomAppBar(
+
                 actions = {
                     Row(
                         horizontalArrangement = Arrangement.SpaceAround,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.Transparent)
                     ) {
                         IconButton(onClick = { navController.navigate("frontView/{username}") }) {
                             Icon(Icons.Filled.Home, contentDescription = "Takes you to frontpage")
@@ -175,12 +191,20 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
             )
         },
     ) { innerPadding ->
+        Box {
+            Image(
+                painter = painterResource(id = R.drawable.on_boarding_image),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
         LazyColumn(
             modifier
                 .fillMaxWidth()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
             items(programs) { program ->
                 ProgramsList(
                     name = program.name,
@@ -189,6 +213,7 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
                 )
             }
         }
+    }
     }
 }
 @Composable
@@ -201,15 +226,26 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
                 selected = item.exercises
             }
         }
+    Box (modifier = Modifier
+        .fillMaxSize()){
+        Image(
+            painter = painterResource(id = R.drawable.on_boarding_image),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Column {
-            Text(fontSize = 25.sp, fontWeight = FontWeight.Bold, text = "${viewModel.search}")
+            Text(fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary ,
+                text = "${viewModel.search}")
 
-            LazyColumn(contentPadding = PaddingValues(16.dp)) {
+            LazyColumn(modifier = Modifier.background(Color.Transparent),contentPadding = PaddingValues(16.dp)) {
                 items(selected) { exercise ->
                     var isChecked by remember { mutableStateOf(false) }
                     Box() {
                         ElevatedCard(modifier = Modifier
-                            .background(if (isChecked) Color.Gray else Color.White)
+                            .background(if (isChecked) MaterialTheme.colorScheme.secondary else Color.Transparent)
                             .fillMaxWidth()
                             .fillMaxWidth()
                             .clickable {
@@ -219,15 +255,16 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
                             )
                             }
                             .padding(14.dp)) {
-                            Text(fontSize = 25.sp, text = "Exercise: $exercise")
+                            Text(fontSize = 25.sp,text = "Exercise: $exercise")
                             if (isChecked) {
                                 // Overlay a check mark when the card is checked
                                 Icon(
                                     imageVector = Icons.Default.Check,
+                                    tint = Color.Blue,
                                     contentDescription = "Checked",
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(24.dp)
+                                        .size(34.dp)
                                         .background(Color.White, CircleShape)
                                 )
                             }
@@ -237,13 +274,13 @@ fun List(navController: NavController, modifier: Modifier,name: String,viewModel
                 }
             }
         }
-
+    }
     }
     @Preview(showBackground = true)
     @Composable
     fun ExercisePreview() {
         FitnessTrackerTheme {
-            ExerciseSelect(viewModel = ViewModel(), name = "boi")
+
 
         }
     }
