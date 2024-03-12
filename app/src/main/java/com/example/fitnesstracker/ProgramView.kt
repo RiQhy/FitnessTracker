@@ -85,13 +85,13 @@ class ProgramView : ComponentActivity() {
                 color = MaterialTheme.colorScheme.background,
 
             ) {
-                Scaffold(floatingActionButtonPosition = FabPosition.End , floatingActionButton = {
+                Scaffold( floatingActionButton = {
                     FloatingActionButton(onClick = { nvController.popBackStack() }
                     ) {
                             Icon(Icons.Default.ArrowBack, "Back Button")
                         }
 
-                }) { innerPadding ->
+                }, floatingActionButtonPosition = FabPosition.Center) { innerPadding ->
                     NavHost(
                         modifier = Modifier.padding(paddingValues = innerPadding),
                         navController = nvController, startDestination = "List"
