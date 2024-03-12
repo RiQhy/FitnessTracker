@@ -8,11 +8,9 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -87,7 +85,7 @@ class ProgramView : ComponentActivity() {
                 color = MaterialTheme.colorScheme.background,
 
             ) {
-                Scaffold(floatingActionButtonPosition = FabPosition.EndOverlay , floatingActionButton = {
+                Scaffold(floatingActionButtonPosition = FabPosition.End , floatingActionButton = {
                     FloatingActionButton(onClick = { nvController.popBackStack() }
                     ) {
                             Icon(Icons.Default.ArrowBack, "Back Button")
