@@ -3,6 +3,7 @@ package com.example.fitnesstracker
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -137,26 +138,31 @@ fun SettingsScreen(navController: NavController) {
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        IconButton(onClick = { navController.navigate("frontView/{username}") }) {
-                            Icon(Icons.Filled.Home, contentDescription = "Takes you to frontpage")
-                        }
-                        IconButton(onClick = { navController.navigate("settings") }) {
-                            Icon(
-                                Icons.Filled.Settings,
-                                contentDescription = "Takes you to settings page",
-                            )
-                        }
-                        IconButton(onClick = { navController.navigate("exerciseProgramsView") }) {
-                            Icon(
-                                Icons.Filled.Star,
-                                contentDescription = "Takes you to exercise programs page",
-                            )
-                        }
-                        IconButton(onClick = { navController.navigate("statsView") }) {
-                            Icon(
-                                Icons.Filled.Favorite,
-                                contentDescription = "Takes you to status page",
-                            )
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceAround,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            IconButton(onClick = { navController.navigate("frontView/{username}") }) {
+                                Icon(Icons.Filled.Home, contentDescription = "Takes you to frontpage")
+                            }
+                            IconButton(onClick = { navController.navigate("settings") }) {
+                                Icon(
+                                    Icons.Filled.Settings,
+                                    contentDescription = "Takes you to settings page",
+                                )
+                            }
+                            IconButton(onClick = { navController.navigate("exerciseProgramsView") }) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Takes you to exercise programs page",
+                                )
+                            }
+                            IconButton(onClick = { navController.navigate("statsView") }) {
+                                Icon(
+                                    Icons.Filled.Favorite,
+                                    contentDescription = "Takes you to status page",
+                                )
+                            }
                         }
                     },
                 )

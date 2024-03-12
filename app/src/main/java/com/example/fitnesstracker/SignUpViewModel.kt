@@ -12,6 +12,7 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
         viewModelScope.launch {
             userRepository.insertUser(user)
             val userName = user.name
+            UserSession.username = userName
             onSuccess(userName)
 
         }
