@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -99,20 +97,20 @@ fun StatsViewScreen(navController: NavController) {
             contentAlignment = Alignment.Center,
             modifier = Modifier
 
-                .padding(innerPadding)
+                .padding(innerPadding) // Apply padding from the Scaffold
         ) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 16.dp) // Apply additional horizontal padding if needed
             ) {
                 CalendarApp()
                 Spacer(modifier = Modifier.height(132.dp))
-                HeartRateStuff(MyViewModel())
-                Spacer(modifier = Modifier.height(32.dp))
-                StepCounterApp()
+                HeartRateStuff(MyViewModel()) // Your existing heart rate composable
+                Spacer(modifier = Modifier.height(32.dp)) // Adjust the space as needed
+                StepCounterApp() // Your existing step counter composable
                 Spacer(modifier = Modifier.height(32.dp))
                 HeightWeight()
             }
@@ -146,11 +144,11 @@ fun StepCounterApp() {
 fun StepCounterDisplay(steps: Float) { // Accepts steps directly
 
     Box(contentAlignment = Alignment.Center) {
-
+        // Use the steps value directly in your Text composable
         CircularProgressIndicator(
             progress = steps / 10000,
             color = Color(0xFFF44336),
-            strokeWidth = 8.dp,
+            strokeWidth = 8.dp, // Specify the stroke width here directly
             modifier = Modifier.size(200.dp)
         )
         Text(text = "Steps: ${steps.toInt()}/10000")
@@ -171,6 +169,7 @@ fun HeartRate(viewModel: MyViewModel, function: () -> Unit) {
 
 @Composable //Display Heart Rate
 fun HeartRateStuff(viewModel: MyViewModel) {
+    // Assuming viewModel has a LiveData or State holding heart rate value
     val heartRate by viewModel.mBPM.observeAsState(initial = 0)
 
     Box(contentAlignment = Alignment.Center) {
@@ -193,20 +192,23 @@ fun HeartRateStuff(viewModel: MyViewModel) {
 
 @Composable //Display Height and Weight
 fun HeightWeight(){
+    val height = UserSession.height
+    val weight = UserSession.weight
+
     Box(contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Height",
+                text = "Height: $height cm",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = "Weight",
+                text = "Weight: $weight kg",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
 
-            )
+                )
         }
     }
 }
