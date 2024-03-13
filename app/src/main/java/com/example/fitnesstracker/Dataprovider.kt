@@ -6,7 +6,8 @@ object Dataprovider{
     init {
         programs.add(Program("Program_Arms"))
         programs.add(Program("Program_Uperbody"))
-        programs.add(Program("Program_Leggs"))
+        programs.add(Program("Program_LegDay"))
         programs.add(Program("Program_Cardio"))
+        programs.add(Program("Program_HardCore"))
     }
 }
