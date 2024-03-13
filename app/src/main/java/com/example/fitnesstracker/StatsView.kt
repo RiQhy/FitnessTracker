@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -17,12 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-<<<<<<< Updated upstream
-=======
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
->>>>>>> Stashed changes
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -107,15 +105,7 @@ fun StatsViewScreen(navController: NavController) {
 
                 .padding(innerPadding) // Apply padding from the Scaffold
         ) {
-<<<<<<< Updated upstream
 
-            CalendarApp()
-            HeartRateStuff(MyViewModel())
-            StepCounterApp()
-
-
-
-=======
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -130,7 +120,6 @@ fun StatsViewScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp))
                 HeighWeigth()
             }
->>>>>>> Stashed changes
         }
     }
 }
