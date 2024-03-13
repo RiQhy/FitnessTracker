@@ -44,7 +44,6 @@ class GattClientCallback(private val context: Context, private val viewModel: My
             }
             gatt.device.createBond()
         }
-        //Joku kusee tässä se ei saa oikeaa profiilia(?)
         if (newState == BluetoothProfile.STATE_CONNECTED) {
             Log.d("DBG", "Connected GATT service")
 

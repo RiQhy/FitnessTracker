@@ -108,9 +108,9 @@ fun StatsViewScreen(navController: NavController) {
             ) {
                 CalendarApp()
                 Spacer(modifier = Modifier.height(132.dp))
-                HeartRateStuff(MyViewModel()) // Your existing heart rate composable
+                HeartRateStuff(MyViewModel())
                 Spacer(modifier = Modifier.height(32.dp)) // Adjust the space as needed
-                StepCounterApp() // Your existing step counter composable
+                StepCounterApp()
                 Spacer(modifier = Modifier.height(32.dp))
                 HeightWeight()
             }
