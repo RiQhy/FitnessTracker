@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -92,18 +95,31 @@ fun StatsViewScreen(navController: NavController) {
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier.padding(innerPadding),
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
 
+                .padding(innerPadding) // Apply padding from the Scaffold
         ) {
-            Column {
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp) // Apply additional horizontal padding if needed
+            ) {
                 CalendarApp()
-                HeartRateStuff(MyViewModel())
-                StepCounterApp()
+                Spacer(modifier = Modifier.height(132.dp))
+                HeartRateStuff(MyViewModel()) // Your existing heart rate composable
+                Spacer(modifier = Modifier.height(32.dp)) // Adjust the space as needed
+                StepCounterApp() // Your existing step counter composable
+                Spacer(modifier = Modifier.height(32.dp))
+                HeighWeigth()
             }
         }
     }
 }
+
 @Composable
 fun StepCounterApp() {
     val stepCounterViewModel: StepCounterViewModel = viewModel()
@@ -128,10 +144,11 @@ fun StepCounterApp() {
 
 @Composable
 fun StepCounterDisplay(steps: Float) { // Accepts steps directly
+
     Box(contentAlignment = Alignment.Center) {
         // Use the steps value directly in your Text composable
         CircularProgressIndicator(
-            progress = steps,
+            progress = steps / 10000,
             color = Color(0xFFF44336),
             strokeWidth = 8.dp, // Specify the stroke width here directly
             modifier = Modifier.size(200.dp)
@@ -175,6 +192,26 @@ fun HeartRateStuff(viewModel: MyViewModel) {
     }
 }
 
+@Composable
+fun HeighWeigth(){
+    Box(contentAlignment = Alignment.Center) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Height",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                text = "Weight",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+
+            )
+        }
+    }
+}
+
 
 
 
@@ -182,9 +219,12 @@ fun HeartRateStuff(viewModel: MyViewModel) {
 @Composable
 fun CalendarAppPreview() {
     FitnessTrackerTheme {
+
         CalendarApp(
             modifier = Modifier.padding(16.dp)
         )
+
+
     }
 }
 
