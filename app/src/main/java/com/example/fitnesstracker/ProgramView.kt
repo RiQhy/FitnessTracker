@@ -10,7 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -141,7 +140,7 @@ fun ProgramsList(name: String, viewModel: ViewModel, onNavigateToDetails: (Strin
         ){
             Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            fontSize=20.sp, fontWeight=FontWeight.Bold, fontStyle = FontStyle.Normal, color = MaterialTheme.colorScheme.primary,
+            fontSize=20.sp, fontWeight=FontWeight.Bold, fontStyle = FontStyle.Normal, color = MaterialTheme.colorScheme.background,
             text = name
         )}
 
