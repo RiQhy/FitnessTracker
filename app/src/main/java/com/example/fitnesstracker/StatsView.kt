@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -114,7 +112,7 @@ fun StatsViewScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(32.dp)) // Adjust the space as needed
                 StepCounterApp() // Your existing step counter composable
                 Spacer(modifier = Modifier.height(32.dp))
-                HeighWeigth()
+                HeightWeight()
             }
         }
     }
@@ -193,21 +191,25 @@ fun HeartRateStuff(viewModel: MyViewModel) {
 }
 
 @Composable
-fun HeighWeigth(){
+fun HeightWeight(){
+
+    val height = UserSession.height
+    val weight = UserSession.weight
+
     Box(contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Height",
+                text = "Height: $height cm",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = "Weight",
+                text = "Weight: $weight kg",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
 
-            )
+                )
         }
     }
 }

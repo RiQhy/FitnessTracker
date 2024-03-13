@@ -13,6 +13,8 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
             userRepository.insertUser(user)
             val userName = user.name
             UserSession.username = userName
+            UserSession.height = user.height
+            UserSession.weight = user.weight
             onSuccess(userName)
 
         }
