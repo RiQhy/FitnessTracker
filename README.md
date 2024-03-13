@@ -24,7 +24,7 @@ Status view shows steps taken, heartrate, calendar, weight and height <br>
 <img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/91aea15d-ae75-4849-b9d8-f154021d4fd5" width="250" height="500"> <br>
 
 
-
+# Team
 Christian Olkkonen - Log Keeper <br>
 Emil Zghaib - Decider <br>
 Semen Morozov - Expert Coder <br>
