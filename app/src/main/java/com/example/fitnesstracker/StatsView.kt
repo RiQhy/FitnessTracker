@@ -194,6 +194,8 @@ fun HeartRateStuff(viewModel: MyViewModel) {
 fun HeightWeight(){
     val height = UserSession.height
     val weight = UserSession.weight
+    val age = UserSession.age
+    val gender = UserSession.gender
 
     Box(contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

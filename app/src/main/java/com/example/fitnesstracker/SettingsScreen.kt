@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -73,12 +74,12 @@ fun SettingsScreen(navController: NavController) {
     // State variables for settings
     var weightFieldValue by remember { mutableStateOf("") }
     var heightFieldValue by remember { mutableStateOf("") }
+    var ageFieldValue by remember { mutableStateOf("") }
     var genderFieldValue by remember { mutableStateOf("") }
 
     // Surface for displaying settings
     Surface(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         // Bottom bar navigation
         Scaffold(
@@ -120,6 +121,13 @@ fun SettingsScreen(navController: NavController) {
                 modifier = Modifier.padding(innerPadding).fillMaxSize()
             ) {
 
+                // Title text
+                Text(
+                    text = "Change your parameters",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+
                 // Labeled text fields for weight, height, and gender
                 LabeledTextField(
                     label = "Weight:",
@@ -129,10 +137,25 @@ fun SettingsScreen(navController: NavController) {
                     label = "Height:",
                     textFieldValue = heightFieldValue
                 ) { heightFieldValue = it }
-                LabeledTextField(
-                    label = "Man/Woman:",
-                    textFieldValue = genderFieldValue
-                ) { genderFieldValue = it }
+
+
+                // Save button to update user data
+                Button(
+                    onClick = {
+                        // Update UserSession with new height and weight values
+                        if (heightFieldValue.isNotBlank()) {
+                            UserSession.height = heightFieldValue.toInt()
+                        }
+                        if (weightFieldValue.isNotBlank()) {
+                            UserSession.weight = weightFieldValue.toInt()
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp)
+                ) {
+                    Text("Save")
+                }
             }
         }
     }
