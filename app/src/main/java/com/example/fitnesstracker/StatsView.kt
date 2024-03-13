@@ -57,7 +57,7 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun StatsViewScreen(navController: NavController) {
-    // Bottom bar navigation
+    // Bottom bar navigation and calls Displays that shows on the view
     Scaffold(
         bottomBar = {
             BottomAppBar(
@@ -99,40 +99,40 @@ fun StatsViewScreen(navController: NavController) {
             contentAlignment = Alignment.Center,
             modifier = Modifier
 
-                .padding(innerPadding) // Apply padding from the Scaffold
+                .padding(innerPadding)
         ) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp) // Apply additional horizontal padding if needed
+                    .padding(horizontal = 16.dp)
             ) {
                 CalendarApp()
                 Spacer(modifier = Modifier.height(132.dp))
-                HeartRateStuff(MyViewModel()) // Your existing heart rate composable
-                Spacer(modifier = Modifier.height(32.dp)) // Adjust the space as needed
-                StepCounterApp() // Your existing step counter composable
+                HeartRateStuff(MyViewModel())
                 Spacer(modifier = Modifier.height(32.dp))
-                HeighWeigth()
+                StepCounterApp()
+                Spacer(modifier = Modifier.height(32.dp))
+                HeightWeight()
             }
         }
     }
 }
 
-@Composable
+@Composable//uses ViewModel to do its thing and calls StepCounterDisplay
 fun StepCounterApp() {
     val stepCounterViewModel: StepCounterViewModel = viewModel()
 
     // Observe the steps count as a state and correctly reference
     val steps = stepCounterViewModel.steps.absoluteValue
 
-    // Use DisposableEffect for lifecycle-aware operations
+
     DisposableEffect(key1 = Unit) {
-        // Commands to execute when entering composition
+
         stepCounterViewModel.startListening()
 
-        // Cleanup commands
+
         onDispose {
             stepCounterViewModel.stopListening()
         }
@@ -142,15 +142,15 @@ fun StepCounterApp() {
     StepCounterDisplay(steps)
 }
 
-@Composable
+@Composable //Display steps taken and indicator
 fun StepCounterDisplay(steps: Float) { // Accepts steps directly
 
     Box(contentAlignment = Alignment.Center) {
-        // Use the steps value directly in your Text composable
+
         CircularProgressIndicator(
             progress = steps / 10000,
             color = Color(0xFFF44336),
-            strokeWidth = 8.dp, // Specify the stroke width here directly
+            strokeWidth = 8.dp,
             modifier = Modifier.size(200.dp)
         )
         Text(text = "Steps: ${steps.toInt()}/10000")
@@ -169,9 +169,8 @@ fun HeartRate(viewModel: MyViewModel, function: () -> Unit) {
     )
 }
 
-@Composable
+@Composable //Display Heart Rate
 fun HeartRateStuff(viewModel: MyViewModel) {
-    // Assuming viewModel has a LiveData or State holding heart rate value
     val heartRate by viewModel.mBPM.observeAsState(initial = 0)
 
     Box(contentAlignment = Alignment.Center) {
@@ -192,8 +191,8 @@ fun HeartRateStuff(viewModel: MyViewModel) {
     }
 }
 
-@Composable
-fun HeighWeigth(){
+@Composable //Display Height and Weight
+fun HeightWeight(){
     Box(contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
@@ -228,7 +227,7 @@ fun CalendarAppPreview() {
     }
 }
 
-@Composable
+@Composable// Display the calendar
 fun CalendarApp(
     modifier: Modifier = Modifier,
 ) {

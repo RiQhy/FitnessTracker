@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (!isGranted) {
             // Inform the user that the permission is needed.
-            // You can use a Toast, Dialog, or another method to communicate this.
+
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
