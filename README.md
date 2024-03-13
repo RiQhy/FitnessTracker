@@ -15,13 +15,13 @@ Status view shows steps taken, heartrate, calendar, weight and height <br>
 
 # Screenshots
 
-<img src= https://github.com/RiQhy/FitnessTracker/assets/91950623/20e0807b-b62c-4a81-a838-f0831d56eefa>
-![Screenshot_20240313_225311_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/938027e0-bed7-4b0f-bd08-433579c89028)
-![Screenshot_20240313_225324_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/251eb05f-2ff9-443e-a6d6-1f1e3e4c907a)
-![Screenshot_20240313_225337_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/a88601ef-b712-4981-9eca-0954016ccca1)
-![Screenshot_20240313_225347_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/74d12e8c-6669-4c00-86c9-b1369a1fea43)
-![Screenshot_20240313_225622_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/1951cb47-531b-4402-877a-40cd3b5a15b1)
-![Screenshot_20240313_225642_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/91aea15d-ae75-4849-b9d8-f154021d4fd5)
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/20e0807b-b62c-4a81-a838-f0831d56eefa" width="500" height="250">
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/938027e0-bed7-4b0f-bd08-433579c89028" width="500" height="250">
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/251eb05f-2ff9-443e-a6d6-1f1e3e4c907a" width="500" height="250">
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/a88601ef-b712-4981-9eca-0954016ccca1" width="500" height="250">
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/74d12e8c-6669-4c00-86c9-b1369a1fea43" width="500" height="250">
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/1951cb47-531b-4402-877a-40cd3b5a15b1" width="500" height="250">
+<img src= "https://github.com/RiQhy/FitnessTracker/assets/91950623/91aea15d-ae75-4849-b9d8-f154021d4fd5" width="500" height="250">
 
 
 
