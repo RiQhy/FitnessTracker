@@ -15,13 +15,13 @@ Status view shows steps taken, heartrate, calendar, weight and height <br>
 
 # Screenshots
 
-![Screenshot_20240313_225211_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/611c4ff2-0aa5-46b8-8abc-42f853d92481 =250x250)
-![Screenshot_20240313_225311_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/6034b0ff-83d9-4cd1-b944-b978fe1dc069 =250x250)
-![Screenshot_20240313_225324_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/f3ba0951-3314-4977-a4b4-53d2344206f5 =250x250)
-![Screenshot_20240313_225337_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/5b883ffe-4f72-4d36-b032-daca63b7439b =250x250)
-![Screenshot_20240313_225347_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/183e2af2-5e56-41d5-a30d-4d40fb1a0a93 =250x250)
-![Screenshot_20240313_225622_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/b4f22589-8df5-4593-83e2-4850fbe28b60 =250x250)
-![Screenshot_20240313_225642_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/8cb0a965-3509-45fe-a355-0733632e9e32 =250x250)
+<img(https://github.com/RiQhy/FitnessTracker/assets/91950623/611c4ff2-0aa5-46b8-8abc-42f853d92481)>
+<img(https://github.com/RiQhy/FitnessTracker/assets/91950623/6034b0ff-83d9-4cd1-b944-b978fe1dc069)>
+<img(https://github.com/RiQhy/FitnessTracker/assets/91950623/f3ba0951-3314-4977-a4b4-53d2344206f5)>
+![Screenshot_20240313_225337_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/5b883ffe-4f72-4d36-b032-daca63b7439b)
+![Screenshot_20240313_225347_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/183e2af2-5e56-41d5-a30d-4d40fb1a0a93)
+![Screenshot_20240313_225622_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/b4f22589-8df5-4593-83e2-4850fbe28b60)
+![Screenshot_20240313_225642_Fitness_Tracker](https://github.com/RiQhy/FitnessTracker/assets/91950623/8cb0a965-3509-45fe-a355-0733632e9e32)
 
 Christian Olkkonen - Log Keeper <br>
 Emil Zghaib - Decider <br>
